@@ -1,0 +1,6 @@
+@Eventary_API_HostAddress = http://localhost:5109
+
+GET {{Eventary_API_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
