@@ -16,7 +16,7 @@ namespace DAL.Repositories
 
         public async Task<IEnumerable<EmployeeDto>> GetAllAsync()
         {
-            var employees = await _context.Employees.ToListAsync();
+            var employees = await _context.employee.ToListAsync();
             return employees.Select(employee => new EmployeeDto
             {
                 Id = employee.Id,
@@ -32,7 +32,7 @@ namespace DAL.Repositories
 
         public async Task<EmployeeDto?> GetByIdAsync(long id)
         {
-            var employee = await _context.Employees.FindAsync(id);
+            var employee = await _context.employee.FindAsync(id);
             if (employee == null)
             {
                 return null;
@@ -66,13 +66,13 @@ namespace DAL.Repositories
                 Company_Id = employeeDto.Company_Id
             };
 
-            await _context.Employees.AddAsync(employee);
+            await _context.employee.AddAsync(employee);
             await _context.SaveChangesAsync();
         }
 
         public async Task UpdateEmployeeAsync(EmployeeDto employeeDto)
         {
-            var existingEmployee = await _context.Employees.FindAsync(employeeDto.Id);
+            var existingEmployee = await _context.employee.FindAsync(employeeDto.Id);
             if (existingEmployee == null)
             {
                 throw new KeyNotFoundException($"Employee with id: {employeeDto.Id} was not found.");
@@ -87,19 +87,19 @@ namespace DAL.Repositories
             existingEmployee.EmployeePermission = employeeDto.EmployeePermission;
             existingEmployee.Company_Id = employeeDto.Company_Id;
 
-            _context.Employees.Update(existingEmployee);
+            _context.employee.Update(existingEmployee);
             await _context.SaveChangesAsync();
         }
 
         public async Task DeleteEmployeeAsync(long id)
         {
-            var employee = await _context.Employees.FindAsync(id);
+            var employee = await _context.employee.FindAsync(id);
             if (employee == null)
             {
                 throw new KeyNotFoundException($"Employee with id: {id} was not found.");
             }
 
-            _context.Employees.Remove(employee);
+            _context.employee.Remove(employee);
             await _context.SaveChangesAsync();
         }
     }

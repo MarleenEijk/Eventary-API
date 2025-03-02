@@ -1,5 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
-using CORE.Models;
+﻿using CORE.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace DAL
 {
@@ -9,6 +9,6 @@ namespace DAL
         {
         }
 
-        public DbSet<Employee> Employees { get; set; }
+        public DbSet<Employee> employee { get; set; }
     }
 }

@@ -1,6 +1,8 @@
+using CORE.Interfaces;
+using CORE.Services;
 using DAL;
+using DAL.Repositories;
 using Microsoft.EntityFrameworkCore;
-using System;
 
 namespace Eventary_API
 {
@@ -9,8 +11,14 @@ namespace Eventary_API
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
+
+            // Register DbContext
             builder.Services.AddDbContext<AppDbContext>(options =>
                 options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+
+            // Register repositories and services
+            builder.Services.AddScoped<IEmployeeRepository, EmployeeRepository>();
+            builder.Services.AddScoped<EmployeeService>();
 
             builder.Services.AddCors(options =>
             {
@@ -44,3 +52,4 @@ namespace Eventary_API
         }
     }
 }
+
