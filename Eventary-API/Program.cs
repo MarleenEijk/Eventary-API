@@ -19,6 +19,9 @@ namespace Eventary_API
             // Register repositories and services
             builder.Services.AddScoped<IEmployeeRepository, EmployeeRepository>();
             builder.Services.AddScoped<EmployeeService>();
+            builder.Services.AddScoped<IItemRepository, ItemRepository>();
+            builder.Services.AddScoped<ItemService>();
+
 
             builder.Services.AddCors(options =>
             {
