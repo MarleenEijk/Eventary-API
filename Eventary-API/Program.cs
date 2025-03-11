@@ -11,12 +11,20 @@ namespace Eventary_API
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
-
-            // Register DbContext
             builder.Services.AddDbContext<AppDbContext>(options =>
                 options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
-            // Register repositories and services
+            builder.Services.AddCors(options =>
+            {
+                options.AddPolicy("MyCors", builder =>
+                {
+                    builder.WithOrigins("http://localhost:4200")
+                    .AllowAnyMethod()
+                    .AllowAnyHeader();
+                });
+            });
+
+
             builder.Services.AddScoped<IEmployeeRepository, EmployeeRepository>();
             builder.Services.AddScoped<EmployeeService>();
             builder.Services.AddScoped<IItemRepository, ItemRepository>();
@@ -48,6 +56,7 @@ namespace Eventary_API
                 app.UseSwaggerUI();
             }
 
+            app.UseCors("MyCors");
             app.UseHttpsRedirection();
             app.UseAuthorization();
             app.MapControllers();
