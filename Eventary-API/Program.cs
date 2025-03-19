@@ -56,7 +56,10 @@ namespace Eventary_API
             {
                 app.UseSwagger();
                 app.UseSwaggerUI();
+
+                app.MapGet("/", () => Results.Redirect("/swagger"));
             }
+
 
             app.UseCors("MyCors");
             app.UseHttpsRedirection();
