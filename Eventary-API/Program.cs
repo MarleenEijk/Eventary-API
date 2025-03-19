@@ -51,20 +51,21 @@ namespace Eventary_API
 
             var app = builder.Build();
 
-            // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())
             {
                 app.UseSwagger();
-                app.UseSwaggerUI();
-
-                app.MapGet("/", () => Results.Redirect("/swagger"));
+                app.UseSwaggerUI(c =>
+                {
+                    c.SwaggerEndpoint("/swagger/v1/swagger.json", "API v1");
+                });
             }
 
-
             app.UseCors("MyCors");
-            app.UseHttpsRedirection();
+            app.UseRouting();
             app.UseAuthorization();
             app.MapControllers();
+            app.MapGet("/", () => "Welcome to Eventary API");
+
             app.Run();
         }
     }
