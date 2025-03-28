@@ -63,7 +63,7 @@ namespace Eventary_API
             app.UseCors("MyCors");
             app.UseRouting();
             app.UseAuthorization();
-            app.MapControllers();
+            app.MapControllers();   
             app.MapGet("/", () => "Welcome to Eventary API");
 
             app.Run();
