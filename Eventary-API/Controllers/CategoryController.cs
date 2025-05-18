@@ -1,9 +1,6 @@
 ﻿using CORE.Dto;
-using CORE.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using CORE.Services;
-using System.Collections.Generic;
-using System.Threading.Tasks;
 
 namespace Eventary_API.Controllers
 {

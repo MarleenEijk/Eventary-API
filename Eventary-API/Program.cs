@@ -31,6 +31,8 @@ namespace Eventary_API
             builder.Services.AddScoped<ItemService>();
             builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
             builder.Services.AddScoped<CategoryService>();
+            builder.Services.AddScoped<IOrderRepository, OrderRepository>();
+            builder.Services.AddScoped<OrderService>();
 
 
             builder.Services.AddCors(options =>

@@ -12,5 +12,6 @@ namespace DAL
         public DbSet<Employee> employee { get; set; }
         public DbSet<Item> item { get; set; }
         public DbSet<Category> category { get; set; }
+        public DbSet<Order> order { get; set; }
     }
 }
