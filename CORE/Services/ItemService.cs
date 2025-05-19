@@ -29,11 +29,29 @@ namespace CORE.Services
 
         public async Task AddItemAsync(ItemDto itemDto)
         {
+            if (itemDto.Quantity < 0)
+            {
+                throw new ArgumentException("Quantity cannot be negative.");
+            }
+            if (itemDto.Price < 0)
+            {
+                throw new ArgumentException("Price cannot be negative.");
+            }
+
             await _itemRepository.AddItemAsync(itemDto);
         }
 
         public async Task UpdateItemAsync(ItemDto itemDto)
         {
+            if (itemDto.Quantity < 0)
+            {
+                throw new ArgumentException("Quantity cannot be negative.");
+            }
+            if (itemDto.Price < 0)
+            {
+                throw new ArgumentException("Price cannot be negative.");
+            }
+
             await _itemRepository.UpdateItemAsync(itemDto);
         }
 

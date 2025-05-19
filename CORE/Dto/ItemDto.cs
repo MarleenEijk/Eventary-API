@@ -13,7 +13,7 @@ namespace CORE.Dto
         [Required]public string Name { get; set; }
         [Required]public decimal Price { get; set; }
         [Required]public int Quantity { get; set; }
-        [Required]public string ImageUrl { get; set; }
+        [Required][Url(ErrorMessage = "Invalid URL format.")] public string ImageUrl { get; set; }
         [Required]public long Category_Id { get; set; }
         [Required]public long Company_Id { get; set; }
     }

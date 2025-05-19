@@ -18,6 +18,8 @@ namespace Eventary_API.Controllers
         }
 
         [HttpGet]
+        [ProducesResponseType<List<EmployeeDto>>(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IEnumerable<EmployeeDto>> GetAllEmployeesAsync()
         {
             return await _employeeService.GetAllEmployeesAsync();
@@ -25,9 +27,16 @@ namespace Eventary_API.Controllers
 
         [HttpGet]
         [Route("{id}")]
-        public async Task<EmployeeDto?> GetEmployeeByIdAsync(long id)
+        [ProducesResponseType<EmployeeDto>(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<IActionResult?> GetEmployeeByIdAsync(long id)
         {
-            return await _employeeService.GetEmployeeByIdAsync(id);
+            var employee = await _employeeService.GetEmployeeByIdAsync(id);
+            if (employee == null)
+            {
+                return NotFound("Employee not found.");
+            }
+            return Ok(employee);
         }
 
         //[HttpPost]

@@ -16,15 +16,24 @@ namespace Eventary_API.Controllers
         }
 
         [HttpGet]
+        [ProducesResponseType<List<CategoryDto>>(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IEnumerable<CategoryDto>> GetAllCategoriesAsync()
         {
             return await _categoryService.GetAllCategoriesAsync();
         }
 
         [HttpGet("{id}")]
-        public async Task<CategoryDto?> GetCategoryByIdAsync(long id)
+        [ProducesResponseType<CategoryDto>(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<IActionResult?> GetCategoryByIdAsync(long id)
         {
-            return await _categoryService.GetCategoryByIdAsync(id);
+            var category = await _categoryService.GetCategoryByIdAsync(id);
+            if (category == null)
+            {
+                return NotFound("Category not found.");
+            }
+            return Ok(category);
         }
     }
 }
