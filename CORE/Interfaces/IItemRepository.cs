@@ -14,5 +14,6 @@ namespace CORE.Interfaces
         Task AddItemAsync(ItemDto itemDto);
         Task DeleteItemAsync(long id);
         Task UpdateItemAsync(ItemDto itemDto);
+        Task<ItemDto?> GetByNameAsync(string name);
     }
 }

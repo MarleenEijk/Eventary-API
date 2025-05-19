@@ -1,10 +1,7 @@
 ﻿using CORE.Dto;
 using CORE.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using CORE.Services;
+
 
 namespace CORE.Services
 {
@@ -29,6 +26,12 @@ namespace CORE.Services
 
         public async Task AddItemAsync(ItemDto itemDto)
         {
+            var existingItem = await _itemRepository.GetByNameAsync(itemDto.Name);
+            if (existingItem != null)
+            {
+                throw new ArgumentException("An item with the same name already exists.");
+            }
+
             if (itemDto.Quantity < 0)
             {
                 throw new ArgumentException("Quantity cannot be negative.");
@@ -43,6 +46,12 @@ namespace CORE.Services
 
         public async Task UpdateItemAsync(ItemDto itemDto)
         {
+            var existingItem = await _itemRepository.GetByNameAsync(itemDto.Name);
+            if (existingItem != null)
+            {
+                throw new ArgumentException("An item with the same name already exists.");
+            }
+
             if (itemDto.Quantity < 0)
             {
                 throw new ArgumentException("Quantity cannot be negative.");

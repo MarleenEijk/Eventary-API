@@ -1,4 +1,5 @@
 using CORE.Interfaces;
+using CORE.Repositories;
 using CORE.Services;
 using DAL;
 using DAL.Repositories;
@@ -33,6 +34,10 @@ namespace Eventary_API
             builder.Services.AddScoped<CategoryService>();
             builder.Services.AddScoped<IOrderRepository, OrderRepository>();
             builder.Services.AddScoped<OrderService>();
+
+            builder.Services.AddControllers();
+            builder.Services.AddEndpointsApiExplorer();
+            builder.Services.AddSwaggerGen();
 
 
             builder.Services.AddCors(options =>

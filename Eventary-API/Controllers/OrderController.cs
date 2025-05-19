@@ -58,18 +58,35 @@ namespace Eventary_API.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task UpdateOrderAsync(OrderDto orderDto)
+        public async Task<IActionResult> UpdateOrderAsync(OrderDto orderDto)
         {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+            var existingOrder = await _orderService.GetOrderByIdAsync(orderDto.Id);
+            if (existingOrder == null)
+            {
+                return NotFound("Order not found.");
+            }
             await _orderService.UpdateOrderAsync(orderDto);
+            return Ok();
         }
 
         [HttpDelete]
         [Route("{id}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task DeleteOrderAsync(long id)
+        public async Task<IActionResult> DeleteOrderAsync(long id)
         {
+            var existingOrder = await _orderService.GetOrderByIdAsync(id);
+            if (existingOrder == null)
+            {
+                return NotFound("Order not found.");
+            }
+
             await _orderService.DeleteOrderAsync(id);
+            return Ok();
         }
 
     }

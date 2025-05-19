@@ -13,5 +13,5 @@ namespace CORE.Dto
         [Required]public string Name { get; set; }
 
         [Required]public long Company_Id { get; set; }
-    
+    }
 }

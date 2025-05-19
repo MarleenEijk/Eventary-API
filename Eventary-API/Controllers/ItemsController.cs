@@ -44,25 +44,45 @@ namespace Eventary_API.Controllers
             await _itemService.AddItemAsync(itemDto);
             return CreatedAtAction(nameof(GetItemByIdAsync), new { id = itemDto.Id }, itemDto);
         }
-  
+
         [HttpPut]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task UpdateItemAsync(ItemDto itemDto)
-        { 
+        public async Task<IActionResult> UpdateItemAsync(ItemDto itemDto)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            var existingItem = await _itemService.GetItemByIdAsync(itemDto.Id);
+            if (existingItem == null)
+            {
+                return NotFound("Item not found.");
+            }
+
             await _itemService.UpdateItemAsync(itemDto);
+            return Ok();
         }
+
 
         [HttpDelete]
         [Route("{id}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task DeleteItemAsync(long id)
+        public async Task<IActionResult> DeleteItemAsync(long id)
         {
+            var existingItem = await _itemService.GetItemByIdAsync(id);
+            if (existingItem == null)
+            {
+                return NotFound("Item not found.");
+            }
+
             await _itemService.DeleteItemAsync(id);
+            return Ok();
         }
+
 
     }
 }
