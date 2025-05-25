@@ -89,5 +89,25 @@ namespace Unittest.FakeRepositories
             _items.Remove(item);
             await Task.CompletedTask;
         }
+
+        public async Task<ItemDto?> GetByNameAsync(string name)
+        {
+            var item = _items.FirstOrDefault(i => i.Name == name);
+            if (item == null)
+            {
+                return null;
+            }
+
+            return await Task.FromResult(new ItemDto
+            {
+                Id = item.Id,
+                Name = item.Name,
+                Price = item.Price,
+                Quantity = item.Quantity,
+                ImageUrl = item.ImageUrl,
+                Category_Id = item.Category_Id,
+                Company_Id = item.Company_Id
+            });
+        }
     }
 }

@@ -27,6 +27,7 @@ namespace CORE.Repositories
                     Name = item.Name,
                     Price = item.Price,
                     Quantity = item.Quantity,
+                    ImageUrl = item.ImageUrl,
                     Category_Id = item.Category_Id,
                     Company_Id = item.Company_Id
                 })
@@ -56,6 +57,7 @@ namespace CORE.Repositories
                 Name = itemDto.Name,
                 Price = itemDto.Price,
                 Quantity = itemDto.Quantity,
+                ImageUrl = itemDto.ImageUrl,
                 Category_Id = itemDto.Category_Id,
                 Company_Id = itemDto.Company_Id
             };
@@ -72,6 +74,7 @@ namespace CORE.Repositories
             item.Name = itemDto.Name;
             item.Price = itemDto.Price;
             item.Quantity = itemDto.Quantity;
+            item.ImageUrl = itemDto.ImageUrl;
             item.Category_Id = itemDto.Category_Id;
             item.Company_Id = itemDto.Company_Id;
 
@@ -99,6 +102,7 @@ namespace CORE.Repositories
                 Name = item.Name,
                 Price = item.Price,
                 Quantity = item.Quantity,
+                ImageUrl = item.ImageUrl,
                 Category_Id = item.Category_Id,
                 Company_Id = item.Company_Id
             };
