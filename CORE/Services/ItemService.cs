@@ -1,4 +1,4 @@
-﻿using CORE.Dto;
+﻿    using CORE.Dto;
 using CORE.Interfaces;
 using CORE.Services;
 
@@ -12,7 +12,7 @@ namespace CORE.Services
         public ItemService(IItemRepository itemRepository)
         {
             _itemRepository = itemRepository;
-        }
+        }   
 
         public async Task<IEnumerable<ItemDto>> GetAllItemsAsync()
         {
