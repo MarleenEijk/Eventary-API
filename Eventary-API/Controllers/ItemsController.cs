@@ -6,7 +6,7 @@ namespace Eventary_API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class ItemsController : Controller
+    public class ItemsController : ControllerBase
     {
         private readonly ItemService _itemService;
 
@@ -23,27 +23,40 @@ namespace Eventary_API.Controllers
             return await _itemService.GetAllItemsAsync();
         }
 
-        [HttpGet]
-        [Route("{id}")]
+        [HttpGet("{id}", Name = "GetItemById")]
         [ProducesResponseType<ItemDto>(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<ItemDto?> GetItemByIdAsync(long id)
+        public async Task<IActionResult> GetItemByIdAsync(long id)
         {
-            return await _itemService.GetItemByIdAsync(id);
+            var item = await _itemService.GetItemByIdAsync(id);
+            if (item == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(item);
         }
 
         [HttpPost]
         [ProducesResponseType<ItemDto>(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<IActionResult> AddItemAsync([FromBody]ItemDto itemDto)
+        public async Task<IActionResult> AddItemAsync([FromBody] ItemDto itemDto)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
-            await _itemService.AddItemAsync(itemDto);
-            return CreatedAtAction(nameof(GetItemByIdAsync), new { id = itemDto.Id }, itemDto);
+
+            var addedItem = await _itemService.AddItemAsync(itemDto);
+
+            if (addedItem.Id <= 0)
+            {
+                return BadRequest("Failed to create the item. Invalid ID.");
+            }
+
+            return CreatedAtAction("GetItemById", new { id = addedItem.Id }, addedItem);
         }
+
 
         [HttpPut]
         [ProducesResponseType(StatusCodes.Status200OK)]

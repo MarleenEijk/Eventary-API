@@ -24,7 +24,7 @@ namespace CORE.Services
             return await _itemRepository.GetByIdAsync(id);
         }
 
-        public async Task AddItemAsync(ItemDto itemDto)
+        public async Task<ItemDto> AddItemAsync(ItemDto itemDto)
         {
             var existingItem = await _itemRepository.GetByNameAsync(itemDto.Name);
             if (existingItem != null)
@@ -41,7 +41,8 @@ namespace CORE.Services
                 throw new ArgumentException("Price cannot be negative.");
             }
 
-            await _itemRepository.AddItemAsync(itemDto);
+            var addedItem = await _itemRepository.AddItemAsync(itemDto);
+            return addedItem;
         }
 
         public async Task UpdateItemAsync(ItemDto itemDto)

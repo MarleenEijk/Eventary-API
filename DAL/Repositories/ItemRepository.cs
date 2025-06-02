@@ -50,7 +50,7 @@ namespace CORE.Repositories
             };
         }
 
-        public async Task AddItemAsync(ItemDto itemDto)
+        public async Task<ItemDto> AddItemAsync(ItemDto itemDto)
         {
             var item = new Item
             {
@@ -62,8 +62,19 @@ namespace CORE.Repositories
                 Company_Id = itemDto.Company_Id
             };
 
-            await _context.item.AddAsync(item);
+            var addedItem = await _context.item.AddAsync(item);
             await _context.SaveChangesAsync();
+
+            return new ItemDto
+            {
+                Id = addedItem.Entity.Id,
+                Name = addedItem.Entity.Name,
+                Price = addedItem.Entity.Price,
+                Quantity = addedItem.Entity.Quantity,
+                ImageUrl = addedItem.Entity.ImageUrl,
+                Category_Id = addedItem.Entity.Category_Id,
+                Company_Id = addedItem.Entity.Company_Id
+            };
         }
 
         public async Task UpdateItemAsync(ItemDto itemDto)
