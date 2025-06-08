@@ -38,16 +38,17 @@ namespace Unittest
         }
 
         [Fact]
-        public void RemoveCategory_ShouldRemoveCategory()
+        public async Task RemoveCategory_ShouldRemoveCategory()
         {
             var categoryDto = new CategoryDto { Id = 1, Name = "Test Category" };
             _repository.AddCategory(categoryDto);
 
             _repository.RemoveCategory(1);
-            var result = _repository.GetByIdAsync(1).Result;
+            var result = await _repository.GetByIdAsync(1);
 
             Assert.Null(result);
         }
+
 
         [Fact]
         public async Task GetCategoryByIdAsync_ShouldReturnNull_WhenCategoryDoesNotExist()
@@ -57,10 +58,10 @@ namespace Unittest
         }
 
         [Fact]
-        public void RemoveCategory_ShouldNotThrow_WhenCategoryDoesNotExist()
+        public async Task RemoveCategory_ShouldNotThrow_WhenCategoryDoesNotExist()
         {
             _repository.RemoveCategory(999);
-            var result = _repository.GetByIdAsync(999).Result;
+            var result = await _repository.GetByIdAsync(999);
             Assert.Null(result);
         }
 
