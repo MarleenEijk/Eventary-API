@@ -15,17 +15,6 @@ namespace Eventary_API
             builder.Services.AddDbContext<AppDbContext>(options =>
                 options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
-            builder.Services.AddCors(options =>
-            {
-                options.AddPolicy("MyCors", builder =>
-                {
-                    builder.WithOrigins("http://localhost:4200")
-                    .AllowAnyMethod()
-                    .AllowAnyHeader();
-                });
-            });
-
-
             builder.Services.AddScoped<IEmployeeRepository, EmployeeRepository>();
             builder.Services.AddScoped<EmployeeService>();
             builder.Services.AddScoped<IItemRepository, ItemRepository>();
@@ -35,20 +24,23 @@ namespace Eventary_API
             builder.Services.AddScoped<IOrderRepository, OrderRepository>();
             builder.Services.AddScoped<OrderService>();
 
+            builder.Services.AddCors(options =>
+            {
+                options.AddDefaultPolicy(policy =>
+                {
+                    policy.WithOrigins(
+                        "https://eventary-frontend.northeurope.azurecontainerapps.io",
+                        "http://localhost:4200"
+                    )
+                    .AllowAnyHeader()
+                    .AllowAnyMethod();
+                });
+            });
+            
+
             builder.Services.AddControllers();
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
-
-
-            builder.Services.AddCors(options =>
-            {
-                options.AddPolicy("MyCors", builder =>
-                {
-                    builder.WithOrigins("http://localhost:4200")
-                    .AllowAnyMethod()
-                    .AllowAnyHeader();
-                });
-            });
 
             // Add services to the container.
             builder.Services.AddControllers();

@@ -45,6 +45,7 @@ namespace CORE.Repositories
                 Name = item.Name,
                 Price = item.Price,
                 Quantity = item.Quantity,
+                ImageUrl = item.ImageUrl,
                 Category_Id = item.Category_Id,
                 Company_Id = item.Company_Id
             };

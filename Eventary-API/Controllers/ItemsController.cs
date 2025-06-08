@@ -58,26 +58,28 @@ namespace Eventary_API.Controllers
         }
 
 
-        [HttpPut]
+        [HttpPut("{id}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<IActionResult> UpdateItemAsync(ItemDto itemDto)
+        public async Task<IActionResult> UpdateItemAsync(long id, [FromBody] ItemDto itemDto)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            var existingItem = await _itemService.GetItemByIdAsync(itemDto.Id);
+            var existingItem = await _itemService.GetItemByIdAsync(id);
             if (existingItem == null)
             {
                 return NotFound("Item not found.");
             }
 
+            itemDto.Id = id;
             await _itemService.UpdateItemAsync(itemDto);
             return Ok();
         }
+
 
 
         [HttpDelete]
