@@ -43,7 +43,7 @@ namespace Unittest.FakeRepositories
             });
         }
 
-        public async Task AddItemAsync(ItemDto itemDto)
+        public async Task<ItemDto> AddItemAsync(ItemDto itemDto)
         {
             var item = new Item
             {
@@ -57,8 +57,10 @@ namespace Unittest.FakeRepositories
             };
 
             _items.Add(item);
-            await Task.CompletedTask;
+
+            return await Task.FromResult(itemDto);
         }
+
 
         public async Task UpdateItemAsync(ItemDto itemDto)
         {

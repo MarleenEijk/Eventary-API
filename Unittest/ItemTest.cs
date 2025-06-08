@@ -1,8 +1,4 @@
 ﻿using CORE.Dto;
-using CORE.Models;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Unittest.FakeRepositories;
 using Xunit;
 
