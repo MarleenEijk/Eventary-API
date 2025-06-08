@@ -29,7 +29,7 @@ namespace Eventary_API
                 options.AddDefaultPolicy(policy =>
                 {
                     policy.WithOrigins(
-                        "https://eventary-frontend.northeurope.azurecontainerapps.io",
+                        "https://eventary-frontend.victoriousrock-cc8323fc.northeurope.azurecontainerapps.io",
                         "http://localhost:4200"
                     )
                     .AllowAnyHeader()
