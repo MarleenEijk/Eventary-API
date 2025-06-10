@@ -1,9 +1,11 @@
 ﻿using CORE.Dto;
 using CORE.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Eventary_API.Controllers
 {
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class OrderController : Controller
@@ -37,7 +39,6 @@ namespace Eventary_API.Controllers
 
             return Ok(order);
         }
-
 
         [HttpPost]
         [ProducesResponseType<OrderDto>(StatusCodes.Status201Created)]

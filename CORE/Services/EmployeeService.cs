@@ -24,19 +24,10 @@ namespace CORE.Services
             return await _employeeRepository.GetByIdAsync(id);
         }
 
-        public async Task AddEmployeeAsync(EmployeeDto employeeDto)
+        public async Task<EmployeeDto?> GetByEmailAsync(string email)
         {
-            await _employeeRepository.AddEmployeeAsync(employeeDto);
+            return await _employeeRepository.GetByEmailAsync(email);
         }
 
-        public async Task UpdateEmployeeAsync(EmployeeDto employeeDto)
-        {
-            await _employeeRepository.UpdateEmployeeAsync(employeeDto);
-        }
-
-        public async Task DeleteEmployeeAsync(long id)
-        {
-            await _employeeRepository.DeleteEmployeeAsync(id);
-        }
     }
 }

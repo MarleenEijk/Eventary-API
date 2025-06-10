@@ -51,56 +51,24 @@ namespace DAL.Repositories
             };
         }
 
-        public async Task AddEmployeeAsync(EmployeeDto employeeDto)
+        public async Task<EmployeeDto?> GetByEmailAsync(string email)
         {
-            var employee = new Employee
-            {
-                Id = employeeDto.Id,
-                Name = employeeDto.Name,
-                Email = employeeDto.Email,
-                Password = employeeDto.Password,
-                IsAdmin = employeeDto.IsAdmin,
-                StoragePermission = employeeDto.StoragePermission,
-                OrderPermission = employeeDto.OrderPermission,
-                EmployeePermission = employeeDto.EmployeePermission,
-                Company_Id = employeeDto.Company_Id
-            };
-
-            await _context.employee.AddAsync(employee);
-            await _context.SaveChangesAsync();
-        }
-
-        public async Task UpdateEmployeeAsync(EmployeeDto employeeDto)
-        {
-            var existingEmployee = await _context.employee.FindAsync(employeeDto.Id);
-            if (existingEmployee == null)
-            {
-                throw new KeyNotFoundException($"Employee with id: {employeeDto.Id} was not found.");
-            }
-
-            existingEmployee.Name = employeeDto.Name;
-            existingEmployee.Email = employeeDto.Email;
-            existingEmployee.Password = employeeDto.Password;
-            existingEmployee.IsAdmin = employeeDto.IsAdmin;
-            existingEmployee.StoragePermission = employeeDto.StoragePermission;
-            existingEmployee.OrderPermission = employeeDto.OrderPermission;
-            existingEmployee.EmployeePermission = employeeDto.EmployeePermission;
-            existingEmployee.Company_Id = employeeDto.Company_Id;
-
-            _context.employee.Update(existingEmployee);
-            await _context.SaveChangesAsync();
-        }
-
-        public async Task DeleteEmployeeAsync(long id)
-        {
-            var employee = await _context.employee.FindAsync(id);
+            var employee = await _context.employee.FirstOrDefaultAsync(e => e.Email == email);
             if (employee == null)
-            {
-                throw new KeyNotFoundException($"Employee with id: {id} was not found.");
-            }
+                return null;
 
-            _context.employee.Remove(employee);
-            await _context.SaveChangesAsync();
+            return new EmployeeDto
+            {
+                Id = employee.Id,
+                Name = employee.Name,
+                Email = employee.Email,
+                IsAdmin = employee.IsAdmin,
+                StoragePermission = employee.StoragePermission,
+                OrderPermission = employee.OrderPermission,
+                EmployeePermission = employee.EmployeePermission,
+                Company_Id = employee.Company_Id
+            };
         }
+
     }
 }

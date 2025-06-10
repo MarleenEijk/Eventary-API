@@ -1,9 +1,11 @@
 ﻿using CORE.Dto;
 using CORE.Services;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Eventary_API.Controllers
 {
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class ItemsController : ControllerBase

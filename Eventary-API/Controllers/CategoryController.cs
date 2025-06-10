@@ -1,9 +1,11 @@
 ﻿using CORE.Dto;
 using Microsoft.AspNetCore.Mvc;
 using CORE.Services;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Eventary_API.Controllers
 {
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class CategoryController : Controller

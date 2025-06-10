@@ -8,8 +8,7 @@ namespace CORE.Interfaces
     {
         Task<IEnumerable<EmployeeDto>> GetAllAsync();
         Task<EmployeeDto?> GetByIdAsync(long id);
-        Task AddEmployeeAsync(EmployeeDto employeeDto);
-        Task UpdateEmployeeAsync(EmployeeDto employeeDto);
-        Task DeleteEmployeeAsync(long id);
+        Task<EmployeeDto?> GetByEmailAsync(string email);
+
     }
 }

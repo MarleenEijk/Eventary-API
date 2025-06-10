@@ -1,11 +1,13 @@
 ﻿using CORE.Dto;
 using CORE.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace Eventary_API.Controllers
 {
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class EmployeesController : Controller
@@ -39,23 +41,22 @@ namespace Eventary_API.Controllers
             return Ok(employee);
         }
 
-        //[HttpPost]
-        //public async Task AddEmployeeAsync(EmployeeDto employeeDto)
-        //{
-        //    await _employeeService.AddEmployeeAsync(employeeDto);
-        //}
+        [HttpGet("me")]
+        [ProducesResponseType<EmployeeDto>(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<IActionResult> GetCurrentEmployeeAsync()
+        {
+            var email = User.FindFirst("email")?.Value;
 
-        //[HttpPut]
-        //public async Task UpdateEmployeeAsync(EmployeeDto employeeDto)
-        //{
-        //    await _employeeService.UpdateEmployeeAsync(employeeDto);
-        //}
+            if (string.IsNullOrEmpty(email))
+                return Unauthorized("No email claim in token.");
 
-        //[HttpDelete]
-        //[Route("{id}")]
-        //public async Task DeleteEmployeeAsync(long id)
-        //{
-        //    await _employeeService.DeleteEmployeeAsync(id);
-        //}
+            var employee = await _employeeService.GetByEmailAsync(email);
+            if (employee == null)
+                return NotFound("Employee record not found for this email.");
+
+            return Ok(employee);
+        }
+
     }
 }
