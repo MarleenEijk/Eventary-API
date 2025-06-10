@@ -13,5 +13,6 @@ namespace DAL
         public DbSet<Item> item { get; set; }
         public DbSet<Category> category { get; set; }
         public DbSet<Order> order { get; set; }
+        public DbSet<Company> company { get; set; }
     }
 }

@@ -23,10 +23,12 @@ namespace Eventary_API
             builder.Services.AddScoped<CategoryService>();
             builder.Services.AddScoped<IOrderRepository, OrderRepository>();
             builder.Services.AddScoped<OrderService>();
+            builder.Services.AddScoped<ICompanyRepository, CompanyRepository>();
+            builder.Services.AddScoped<CompanyService>();
 
             builder.Services.AddCors(options =>
             {
-                options.AddDefaultPolicy(policy =>
+                options.AddPolicy("MyCors", policy =>
                 {
                     policy.WithOrigins(
                         "https://eventary-frontend.victoriousrock-cc8323fc.northeurope.azurecontainerapps.io",
@@ -36,7 +38,6 @@ namespace Eventary_API
                     .AllowAnyMethod();
                 });
             });
-            
 
             builder.Services.AddControllers();
             builder.Services.AddEndpointsApiExplorer();
@@ -60,9 +61,10 @@ namespace Eventary_API
             }
 
             app.UseCors("MyCors");
+
             app.UseRouting();
             app.UseAuthorization();
-            app.MapControllers();   
+            app.MapControllers();
             app.MapGet("/", () => "Welcome to Eventary API");
 
             app.Run();

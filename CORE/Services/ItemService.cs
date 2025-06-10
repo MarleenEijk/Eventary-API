@@ -48,7 +48,7 @@ namespace CORE.Services
         public async Task UpdateItemAsync(ItemDto itemDto)
         {
             var existingItem = await _itemRepository.GetByNameAsync(itemDto.Name);
-            if (existingItem != null)
+            if (existingItem != null && existingItem.Id != itemDto.Id)
             {
                 throw new ArgumentException("An item with the same name already exists.");
             }
