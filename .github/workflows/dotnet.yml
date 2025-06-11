@@ -61,9 +61,7 @@ jobs:
 
     - name: Deploy Container
       run: |
-        # Stop and remove any previous container (if exists)
         docker container stop eventary-api || true
         docker container rm eventary-api || true
         
-        # Run a new container with port mappings
         docker run -d --name eventary-api -p 5254:5254 ${{ secrets.DOCKER_USERNAME }}/eventary-api:v1
