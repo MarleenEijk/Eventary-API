@@ -36,7 +36,8 @@ namespace Eventary_API
                     policy.WithOrigins(
                         "https://eventary-frontend.victoriousrock-cc8323fc.northeurope.azurecontainerapps.io",
                         "http://localhost:4200", //front-end
-                        "http://localhost:4201" //second front-end company management
+                        "http://localhost:4201", //second front-end company management
+                        "http://localhost:8080"
                     )
                     .AllowAnyHeader()
                     .AllowAnyMethod();
