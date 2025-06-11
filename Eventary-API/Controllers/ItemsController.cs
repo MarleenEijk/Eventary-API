@@ -45,7 +45,7 @@ namespace Eventary_API.Controllers
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
-            }
+            } //test
 
             var addedItem = await _itemService.AddItemAsync(itemDto);
 

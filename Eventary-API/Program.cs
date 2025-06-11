@@ -1,9 +1,9 @@
+using Microsoft.EntityFrameworkCore;
+using DAL;
 using CORE.Interfaces;
 using CORE.Repositories;
 using CORE.Services;
-using DAL;
 using DAL.Repositories;
-using Microsoft.EntityFrameworkCore;
 
 namespace Eventary_API
 {
@@ -12,8 +12,11 @@ namespace Eventary_API
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
+
+            var connectionString = builder.Configuration.GetConnectionString("conn");
             builder.Services.AddDbContext<AppDbContext>(options =>
-                options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+                 options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString)));
+
 
             builder.Services.AddScoped<IEmployeeRepository, EmployeeRepository>();
             builder.Services.AddScoped<EmployeeService>();
@@ -32,7 +35,8 @@ namespace Eventary_API
                 {
                     policy.WithOrigins(
                         "https://eventary-frontend.victoriousrock-cc8323fc.northeurope.azurecontainerapps.io",
-                        "http://localhost:4200"
+                        "http://localhost:4200", //front-end
+                        "http://localhost:4201" //second front-end company management
                     )
                     .AllowAnyHeader()
                     .AllowAnyMethod();
@@ -40,12 +44,6 @@ namespace Eventary_API
             });
 
             builder.Services.AddControllers();
-            builder.Services.AddEndpointsApiExplorer();
-            builder.Services.AddSwaggerGen();
-
-            // Add services to the container.
-            builder.Services.AddControllers();
-            // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
 
@@ -71,4 +69,3 @@ namespace Eventary_API
         }
     }
 }
-
