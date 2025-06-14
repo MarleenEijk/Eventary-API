@@ -4,13 +4,14 @@ EXPOSE 5254
 
 ENV ASPNETCORE_URLS=http://+:5254
 
-USER app
 FROM --platform=$BUILDPLATFORM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 ARG configuration=Release
 WORKDIR /src
+
 COPY ["Eventary-API/Eventary-API.csproj", "Eventary-API/"]
 COPY ["CORE/CORE.csproj", "CORE/"]
 COPY ["DAL/DAL.csproj", "DAL/"]
+
 RUN dotnet restore "Eventary-API/Eventary-API.csproj"
 COPY . .
 WORKDIR "/src/Eventary-API"
