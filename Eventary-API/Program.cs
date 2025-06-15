@@ -4,6 +4,7 @@ using CORE.Interfaces;
 using CORE.Repositories;
 using CORE.Services;
 using DAL.Repositories;
+using Microsoft.Identity.Client;
 
 namespace Eventary_API
 {
@@ -37,7 +38,8 @@ namespace Eventary_API
                         "https://eventary-frontend.victoriousrock-cc8323fc.northeurope.azurecontainerapps.io",
                         "http://localhost:4200", //front-end
                         "http://localhost:4201", //second front-end company management
-                        "http://localhost:8080"
+                        "http://localhost:8080",
+                        "http://52.158.32.127:4200"
                     )
                     .AllowAnyHeader()
                     .AllowAnyMethod();
@@ -67,6 +69,7 @@ namespace Eventary_API
             app.MapGet("/", () => "Welcome to Eventary API");
 
             app.Run();
+
         }
     }
 }

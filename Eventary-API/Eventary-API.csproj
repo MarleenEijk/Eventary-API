@@ -20,4 +20,8 @@
 		<ProjectReference Include="..\DAL\DAL.csproj" />
 	</ItemGroup>
 
+	<ItemGroup>
+		<InternalsVisableTo Include="..\IntergrationTesting" />
+	</ItemGroup>
+
 </Project>
