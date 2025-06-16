@@ -41,6 +41,7 @@ namespace DAL.Repositories
         {
             var company = new Company
             {
+                Id = companyDto.Id,
                 Name = companyDto.Name
             };
 
@@ -53,6 +54,7 @@ namespace DAL.Repositories
                 Name = company.Name
             };
         }
+
 
         public async Task<bool> UpdateCompanyAsync(CompanyDto companyDto)
         {

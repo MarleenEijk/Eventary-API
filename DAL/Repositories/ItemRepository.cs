@@ -51,10 +51,12 @@ namespace CORE.Repositories
             };
         }
 
+
         public async Task<ItemDto> AddItemAsync(ItemDto itemDto)
         {
             var item = new Item
             {
+                Id = itemDto.Id,
                 Name = itemDto.Name,
                 Price = itemDto.Price,
                 Quantity = itemDto.Quantity,
@@ -77,6 +79,7 @@ namespace CORE.Repositories
                 Company_Id = addedItem.Entity.Company_Id
             };
         }
+
 
         public async Task UpdateItemAsync(ItemDto itemDto)
         {

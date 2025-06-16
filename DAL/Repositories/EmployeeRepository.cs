@@ -22,6 +22,7 @@ namespace DAL.Repositories
                 Id = employee.Id,
                 Name = employee.Name,
                 Email = employee.Email,
+                Password = employee.Password,
                 IsAdmin = employee.IsAdmin,
                 StoragePermission = employee.StoragePermission,
                 OrderPermission = employee.OrderPermission,
@@ -29,6 +30,7 @@ namespace DAL.Repositories
                 Company_Id = employee.Company_Id
             });
         }
+
 
         public async Task<EmployeeDto?> GetByIdAsync(long id)
         {
@@ -43,6 +45,7 @@ namespace DAL.Repositories
                 Id = employee.Id,
                 Name = employee.Name,
                 Email = employee.Email,
+                Password = employee.Password,
                 IsAdmin = employee.IsAdmin,
                 StoragePermission = employee.StoragePermission,
                 OrderPermission = employee.OrderPermission,
@@ -69,6 +72,7 @@ namespace DAL.Repositories
             await _context.employee.AddAsync(employee);
             await _context.SaveChangesAsync();
         }
+
 
         public async Task UpdateEmployeeAsync(EmployeeDto employeeDto)
         {
