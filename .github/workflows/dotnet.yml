@@ -61,9 +61,3 @@ jobs:
         docker push ${{ secrets.DOCKER_USERNAME }}/eventary-api:v1
         docker push ${{ secrets.DOCKER_USERNAME }}/eventary-api:latest
 
-    - name: Deploy Container
-      run: |
-        docker container stop eventary-api || true
-        docker container rm eventary-api || true
-        docker run -d --name eventary-api -p 5254:5254 ${{ secrets.DOCKER_USERNAME }}/eventary-api:latest
-
