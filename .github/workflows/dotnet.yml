@@ -2,13 +2,17 @@ name: .NET CI/CD
 
 on:
   push:
-    branches: [ "main" ]
+    branches: ["main"]
   pull_request:
-    branches: [ "main" ]
+    branches: ["main"]
 
 jobs:
   build:
-    runs-on: self-hosted 
+    runs-on: self-hosted
+    defaults:
+      run:
+        working-directory: D:/Fontys/2025-2026/Semester 3.1/Individueel project/Eventary/Eventary-API
+
     steps:
     - uses: actions/checkout@v4
 
@@ -18,9 +22,7 @@ jobs:
         dotnet-version: 8.0.x
 
     - name: Restore dependencies
-      run: |
-        dotnet restore ./Eventary-API.sln
-      shell: pwsh
+      run: dotnet restore ./Eventary-API.sln
 
     - name: Lint Check
       run: |
@@ -28,33 +30,22 @@ jobs:
         dotnet format analyzers ./Eventary-API.sln --verify-no-changes
       env:
         DOTNET_NOLOGO: 1
-      shell: pwsh
 
     - name: Start SonarQube analysis
-      run: |
-        dotnet sonarscanner begin /k:"Eventary-API" /d:sonar.host.url="http://localhost:9000" /d:sonar.login="${{ secrets.SONAR_TOKEN }}"
-      shell: pwsh
+      run: dotnet sonarscanner begin /k:"Eventary-API" /d:sonar.host.url="http://localhost:9000" /d:sonar.login="${{ secrets.SONAR_TOKEN }}"
 
     - name: Build Solution
-      run: |
-        dotnet build ./Eventary-API.sln --no-restore --configuration Debug
-      shell: pwsh
+      run: dotnet build ./Eventary-API.sln --no-restore --configuration Debug
 
     - name: End SonarQube analysis
-      run: |
-        dotnet sonarscanner end /d:sonar.login="${{ secrets.SONAR_TOKEN }}"
-      shell: pwsh
+      run: dotnet sonarscanner end /d:sonar.login="${{ secrets.SONAR_TOKEN }}"
 
     - name: Run Unit Tests
-      run: |
-        dotnet test ./Unittest/Unittest.csproj --no-build --configuration Debug --verbosity normal
-      shell: pwsh
+      run: dotnet test ./Unittest/Unittest.csproj --no-build --configuration Debug --verbosity normal
 
     - name: Build for Deployment
       if: ${{ success() }}
-      run: |
-        dotnet build ./Eventary-API.sln --configuration Release --no-restore
-      shell: pwsh
+      run: dotnet build ./Eventary-API.sln --configuration Release --no-restore
 
   docker:
     runs-on: ubuntu-latest
@@ -70,8 +61,7 @@ jobs:
         password: ${{ secrets.DOCKER_PASSWORD }}
 
     - name: Build Docker Image
-      run: |
-        docker build -t eventary-api:v1 -f ./Dockerfile .
+      run: docker build -t eventary-api:v1 -f ./Dockerfile .
 
     - name: Push Docker Image to DockerHub
       run: |
