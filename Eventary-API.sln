@@ -11,7 +11,12 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DAL", "DAL\DAL.csproj", "{6
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Unittest", "Unittest\Unittest.csproj", "{256261C8-E23E-43FC-A4B2-D257E42DC5EC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IntergrationTesting", "IntergrationTesting\IntergrationTesting.csproj", "{5FD3FAC4-D55B-4444-9581-7D8263A71745}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IntergrationTesting", "IntergrationTesting\IntergrationTesting.csproj", "{5FD3FAC4-D55B-4444-9581-7D8263A71745}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{731E584F-59B7-47FC-A21A-37C26CB8074D}"
+	ProjectSection(SolutionItems) = preProject
+		docker-compose.yml = docker-compose.yml
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
