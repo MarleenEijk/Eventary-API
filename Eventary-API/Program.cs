@@ -7,7 +7,7 @@ using DAL.Repositories;
 
 namespace Eventary_API
 {
-    public static class Program // Added 'static' keyword
+    public class Program
     {
         public static void Main(string[] args)
         {
