@@ -1,4 +1,4 @@
-name: .NET CI/CD
+name: .NET CI/CD 
 
 on:
   push:
@@ -25,7 +25,7 @@ jobs:
 
     - name: Install SonarScanner
       run: dotnet tool install --global dotnet-sonarscanner
-      shell: pwsh
+      shell: powershell
 
     - name: Begin SonarQube analysis
       run: |
@@ -33,11 +33,11 @@ jobs:
           /k:"eventary-api" `
           /d:sonar.host.url="http://localhost:9000" `
           /d:sonar.login="${{ secrets.SONAR_TOKEN }}"
-      shell: pwsh
+      shell: powershell
 
     - name: Restore dependencies
       run: dotnet restore ./Eventary-API.sln
-      shell: pwsh
+      shell: powershell
 
     - name: Lint Check
       run: |
@@ -45,24 +45,24 @@ jobs:
         dotnet format analyzers ./Eventary-API.sln --verify-no-changes
       env:
         DOTNET_NOLOGO: 1
-      shell: pwsh
+      shell: powershell
 
     - name: Build Solution
       run: dotnet build ./Eventary-API.sln --no-restore --configuration Debug
-      shell: pwsh
+      shell: powershell
 
     - name: Run Unit Tests
       run: dotnet test ./Unittest/Unittest.csproj --no-build --configuration Debug --verbosity normal
-      shell: pwsh
+      shell: powershell
 
     - name: End SonarQube analysis
       run: dotnet sonarscanner end /d:sonar.login="${{ secrets.SONAR_TOKEN }}"
-      shell: pwsh
+      shell: powershell
 
     - name: Build for Deployment
       if: ${{ success() }}
       run: dotnet build ./Eventary-API.sln --configuration Release --no-restore
-      shell: pwsh
+      shell: powershell
 
   docker:
     runs-on: ubuntu-latest
