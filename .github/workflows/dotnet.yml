@@ -8,7 +8,7 @@ on:
 
 jobs:
   build:
-    runs-on: self-hosted  # Use your local machine for SonarQube access
+    runs-on: self-hosted  # Gebruikt jouw lokale machine met toegang tot http://localhost:9000 (SonarQube)
 
     steps:
     - uses: actions/checkout@v4
@@ -19,30 +19,50 @@ jobs:
         dotnet-version: 8.0.x
 
     - name: Restore dependencies
-      run: dotnet restore ./Eventary-API.sln
+      run: |
+        echo "🔧 Restoring dependencies..."
+        dotnet restore ./Eventary-API.sln
+      shell: pwsh
 
     - name: Lint Check
       run: |
+        echo "🧹 Running lint check..."
         dotnet format style ./Eventary-API.sln --verify-no-changes
         dotnet format analyzers ./Eventary-API.sln --verify-no-changes
       env:
         DOTNET_NOLOGO: 1
+      shell: pwsh
 
     - name: Start SonarQube analysis
-      run: dotnet sonarscanner begin /k:"Eventary-API" /d:sonar.host.url="http://localhost:9000" /d:sonar.login="${{ secrets.SONAR_TOKEN }}"
+      run: |
+        echo "🚀 Starting SonarQube analysis..."
+        dotnet sonarscanner begin /k:"Eventary-API" /d:sonar.host.url="http://localhost:9000" /d:sonar.login="${{ secrets.SONAR_TOKEN }}"
+      shell: pwsh
 
     - name: Build Solution
-      run: dotnet build ./Eventary-API.sln --no-restore --configuration Debug
+      run: |
+        echo "🏗️ Building solution..."
+        dotnet build ./Eventary-API.sln --no-restore --configuration Debug
+      shell: pwsh
 
     - name: End SonarQube analysis
-      run: dotnet sonarscanner end /d:sonar.login="${{ secrets.SONAR_TOKEN }}"
+      run: |
+        echo "✅ Ending SonarQube analysis..."
+        dotnet sonarscanner end /d:sonar.login="${{ secrets.SONAR_TOKEN }}"
+      shell: pwsh
 
     - name: Run Unit Tests
-      run: dotnet test ./Unittest/Unittest.csproj --no-build --configuration Debug --verbosity normal
+      run: |
+        echo "🧪 Running unit tests..."
+        dotnet test ./Unittest/Unittest.csproj --no-build --configuration Debug --verbosity normal
+      shell: pwsh
 
     - name: Build for Deployment
       if: ${{ success() }}
-      run: dotnet build ./Eventary-API.sln --configuration Release --no-restore
+      run: |
+        echo "📦 Building for release..."
+        dotnet build ./Eventary-API.sln --configuration Release --no-restore
+      shell: pwsh
 
   docker:
     runs-on: ubuntu-latest
@@ -58,10 +78,13 @@ jobs:
         password: ${{ secrets.DOCKER_PASSWORD }}
 
     - name: Build Docker Image
-      run: docker build -t eventary-api:v1 -f ./Dockerfile .
+      run: |
+        echo "🐳 Building Docker image..."
+        docker build -t eventary-api:v1 -f ./Dockerfile .
 
     - name: Push Docker Image to DockerHub
       run: |
+        echo "📤 Pushing Docker image to DockerHub..."
         docker tag eventary-api:v1 ${{ secrets.DOCKER_USERNAME }}/eventary-api:v1
         docker tag eventary-api:v1 ${{ secrets.DOCKER_USERNAME }}/eventary-api:latest
         docker push ${{ secrets.DOCKER_USERNAME }}/eventary-api:v1
