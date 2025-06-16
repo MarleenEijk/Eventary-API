@@ -57,7 +57,9 @@ jobs:
     - name: Push Docker Image to DockerHub
       run: |
         docker tag eventary-api:v1 ${{ secrets.DOCKER_USERNAME }}/eventary-api:v1
+        docker tag eventary-api:v1 ${{ secrets.DOCKER_USERNAME }}/eventary-api:latest
         docker push ${{ secrets.DOCKER_USERNAME }}/eventary-api:v1
+        docker push ${{ secrets.DOCKER_USERNAME }}/eventary-api:latest
 
     - name: Deploy Container
       run: |
