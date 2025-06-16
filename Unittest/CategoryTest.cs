@@ -28,7 +28,7 @@ namespace Unittest
         [Fact]
         public async Task GetCategoryByIdAsync_ShouldReturnCategory()
         {
-            var categoryDto = new CategoryDto { Id = 1, Name = "Test Category" };
+            var categoryDto = new CategoryDto { Id = 1, Name = "Test Category", Company_Id = 1 }; // Added Company_Id
             _repository.AddCategory(categoryDto);
 
             var result = await _repository.GetByIdAsync(1);
@@ -40,7 +40,7 @@ namespace Unittest
         [Fact]
         public async Task RemoveCategory_ShouldRemoveCategory()
         {
-            var categoryDto = new CategoryDto { Id = 1, Name = "Test Category" };
+            var categoryDto = new CategoryDto { Id = 1, Name = "Test Category", Company_Id = 1 }; // Added Company_Id
             _repository.AddCategory(categoryDto);
 
             _repository.RemoveCategory(1);
@@ -48,7 +48,6 @@ namespace Unittest
 
             Assert.Null(result);
         }
-
 
         [Fact]
         public async Task GetCategoryByIdAsync_ShouldReturnNull_WhenCategoryDoesNotExist()
@@ -64,6 +63,5 @@ namespace Unittest
             var result = await _repository.GetByIdAsync(999);
             Assert.Null(result);
         }
-
     }
 }
