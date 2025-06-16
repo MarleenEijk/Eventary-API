@@ -1,5 +1,17 @@
+name: .NET CI/CD
+
+on:
+  push:
+    branches: ["main"]
+  pull_request:
+    branches: ["main"]
+
+jobs:
   build:
     runs-on: self-hosted
+    defaults:
+      run:
+        working-directory: D:/Fontys/2025-2026/Semester 3.1/Individueel project/Eventary/Eventary-API
 
     steps:
     - uses: actions/checkout@v4
@@ -11,33 +23,49 @@
 
     - name: Restore dependencies
       run: dotnet restore Eventary-API.sln
-      working-directory: D:/Fontys/2025-2026/Semester 3.1/Individueel project/Eventary/Eventary-API
 
     - name: Lint Check
       run: |
         dotnet format style Eventary-API.sln --verify-no-changes
         dotnet format analyzers Eventary-API.sln --verify-no-changes
-      working-directory: D:/Fontys/2025-2026/Semester 3.1/Individueel project/Eventary/Eventary-API
       env:
         DOTNET_NOLOGO: 1
 
     - name: Start SonarQube analysis
       run: dotnet sonarscanner begin /k:"Eventary-API" /d:sonar.host.url="http://localhost:9000" /d:sonar.login="${{ secrets.SONAR_TOKEN }}"
-      working-directory: D:/Fontys/2025-2026/Semester 3.1/Individueel project/Eventary/Eventary-API
 
     - name: Build Solution
       run: dotnet build Eventary-API.sln --no-restore --configuration Debug
-      working-directory: D:/Fontys/2025-2026/Semester 3.1/Individueel project/Eventary/Eventary-API
 
     - name: End SonarQube analysis
       run: dotnet sonarscanner end /d:sonar.login="${{ secrets.SONAR_TOKEN }}"
-      working-directory: D:/Fontys/2025-2026/Semester 3.1/Individueel project/Eventary/Eventary-API
 
     - name: Run Unit Tests
       run: dotnet test Unittest/Unittest.csproj --no-build --configuration Debug --verbosity normal
-      working-directory: D:/Fontys/2025-2026/Semester 3.1/Individueel project/Eventary/Eventary-API
 
     - name: Build for Deployment
       if: ${{ success() }}
       run: dotnet build Eventary-API.sln --configuration Release --no-restore
-      working-directory: D:/Fontys/2025-2026/Semester 3.1/Individueel project/Eventary/Eventary-API
+
+  docker:
+    runs-on: ubuntu-latest
+    needs: build
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Log in to DockerHub
+      uses: docker/login-action@v2
+      with:
+        username: ${{ secrets.DOCKER_USERNAME }}
+        password: ${{ secrets.DOCKER_PASSWORD }}
+
+    - name: Build Docker Image
+      run: docker build -t eventary-api:v1 -f ./Dockerfile .
+
+    - name: Push Docker Image to DockerHub
+      run: |
+        docker tag eventary-api:v1 ${{ secrets.DOCKER_USERNAME }}/eventary-api:v1
+        docker tag eventary-api:v1 ${{ secrets.DOCKER_USERNAME }}/eventary-api:latest
+        docker push ${{ secrets.DOCKER_USERNAME }}/eventary-api:v1
+        docker push ${{ secrets.DOCKER_USERNAME }}/eventary-api:latest
