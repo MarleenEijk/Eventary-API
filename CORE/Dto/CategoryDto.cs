@@ -1,17 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace CORE.Dto
 {
     public class CategoryDto
     {
-        [Required]public long Id { get; set; }
-        [Required]public string Name { get; set; }
-
-        [Required]public long Company_Id { get; set; }
+        [Required] public required long Id { get; set; }
+        [Required(ErrorMessage = "Name is required")]
+        public required string Name { get; set; }
+        [Range(1, long.MaxValue, ErrorMessage = "Company_Id must be greater than 0")]
+        public required long Company_Id { get; set; }
     }
 }
