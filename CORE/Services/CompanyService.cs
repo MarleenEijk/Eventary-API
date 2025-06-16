@@ -44,7 +44,7 @@ namespace CORE.Services
             return true;
         }
 
-        private void ValidateCompanyName(string name)
+        private static void ValidateCompanyName(string name) // Marked as static
         {
             if (string.IsNullOrWhiteSpace(name))
             {
