@@ -98,6 +98,7 @@ namespace Eventary_API.Controllers
             return Ok();
         }
 
+        //commandline for docker test
 
     }
 }
