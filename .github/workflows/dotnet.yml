@@ -8,7 +8,7 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: self-hosted  # Use your local machine for SonarQube access
 
     steps:
     - uses: actions/checkout@v4
@@ -28,8 +28,14 @@ jobs:
       env:
         DOTNET_NOLOGO: 1
 
+    - name: Start SonarQube analysis
+      run: dotnet sonarscanner begin /k:"Eventary-API" /d:sonar.host.url="http://localhost:9000" /d:sonar.login="${{ secrets.SONAR_TOKEN }}"
+
     - name: Build Solution
       run: dotnet build ./Eventary-API.sln --no-restore --configuration Debug
+
+    - name: End SonarQube analysis
+      run: dotnet sonarscanner end /d:sonar.login="${{ secrets.SONAR_TOKEN }}"
 
     - name: Run Unit Tests
       run: dotnet test ./Unittest/Unittest.csproj --no-build --configuration Debug --verbosity normal
@@ -60,4 +66,3 @@ jobs:
         docker tag eventary-api:v1 ${{ secrets.DOCKER_USERNAME }}/eventary-api:latest
         docker push ${{ secrets.DOCKER_USERNAME }}/eventary-api:v1
         docker push ${{ secrets.DOCKER_USERNAME }}/eventary-api:latest
-
