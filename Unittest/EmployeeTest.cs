@@ -22,6 +22,7 @@ namespace Unittest
                 Id = 1,
                 Name = "Test Employee",
                 Email = "test@example.com",
+                Password = "password123",
                 IsAdmin = true,
                 StoragePermission = true,
                 OrderPermission = true,
@@ -39,7 +40,13 @@ namespace Unittest
         [Fact]
         public async Task GetEmployeeByIdAsync_ShouldReturnEmployee()
         {
-            var employeeDto = new EmployeeDto { Id = 1, Name = "Test Employee" };
+            var employeeDto = new EmployeeDto
+            {
+                Id = 1,
+                Name = "Test Employee",
+                Email = "test@example.com",
+                Password = "password123"
+            };
             await _repository.AddEmployeeAsync(employeeDto);
 
             var result = await _repository.GetByIdAsync(1);
@@ -51,10 +58,22 @@ namespace Unittest
         [Fact]
         public async Task UpdateEmployeeAsync_ShouldUpdateEmployee()
         {
-            var employeeDto = new EmployeeDto { Id = 1, Name = "Test Employee" };
+            var employeeDto = new EmployeeDto
+            {
+                Id = 1,
+                Name = "Test Employee",
+                Email = "test@example.com",
+                Password = "password123"
+            };
             await _repository.AddEmployeeAsync(employeeDto);
 
-            var updatedEmployee = new EmployeeDto { Id = 1, Name = "Updated Employee" };
+            var updatedEmployee = new EmployeeDto
+            {
+                Id = 1,
+                Name = "Updated Employee",
+                Email = "updated@example.com",
+                Password = "newpassword123"
+            };
             await _repository.UpdateEmployeeAsync(updatedEmployee);
 
             var result = await _repository.GetByIdAsync(1);
@@ -66,7 +85,13 @@ namespace Unittest
         [Fact]
         public async Task DeleteEmployeeAsync_ShouldRemoveEmployee()
         {
-            var employeeDto = new EmployeeDto { Id = 1, Name = "Test Employee" };
+            var employeeDto = new EmployeeDto
+            {
+                Id = 1,
+                Name = "Test Employee",
+                Email = "test@example.com",
+                Password = "password123"
+            };
             await _repository.AddEmployeeAsync(employeeDto);
 
             await _repository.DeleteEmployeeAsync(1);
@@ -85,7 +110,13 @@ namespace Unittest
         [Fact]
         public async Task UpdateEmployeeAsync_ShouldThrowException_WhenEmployeeDoesNotExist()
         {
-            var nonExistentEmployee = new EmployeeDto { Id = 999, Name = "Non-existent Employee" };
+            var nonExistentEmployee = new EmployeeDto
+            {
+                Id = 999,
+                Name = "Non-existent Employee",
+                Email = "nonexistent@example.com",
+                Password = "password123"
+            };
 
             var exception = await Assert.ThrowsAsync<KeyNotFoundException>(async () =>
             {
