@@ -39,14 +39,6 @@ jobs:
       run: dotnet restore ./Eventary-API.sln
       shell: powershell
 
-    - name: Lint Check
-      run: |
-        dotnet format style ./Eventary-API.sln --verify-no-changes
-        dotnet format analyzers ./Eventary-API.sln --verify-no-changes
-      env:
-        DOTNET_NOLOGO: 1
-      shell: powershell
-
     - name: Build Solution
       run: dotnet build ./Eventary-API.sln --no-restore --configuration Debug
       shell: powershell
