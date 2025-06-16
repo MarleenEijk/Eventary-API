@@ -4,11 +4,10 @@ using CORE.Interfaces;
 using CORE.Repositories;
 using CORE.Services;
 using DAL.Repositories;
-using Microsoft.Identity.Client;
 
 namespace Eventary_API
 {
-    public class Program
+    public static class Program // Added 'static' keyword
     {
         public static void Main(string[] args)
         {
@@ -17,7 +16,6 @@ namespace Eventary_API
             var connectionString = builder.Configuration.GetConnectionString("conn");
             builder.Services.AddDbContext<AppDbContext>(options =>
                  options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString)));
-
 
             builder.Services.AddScoped<IEmployeeRepository, EmployeeRepository>();
             builder.Services.AddScoped<EmployeeService>();
@@ -36,8 +34,8 @@ namespace Eventary_API
                 {
                     policy.WithOrigins(
                         "https://eventary-frontend.victoriousrock-cc8323fc.northeurope.azurecontainerapps.io",
-                        "http://localhost:4200", //front-end
-                        "http://localhost:4201", //second front-end company management
+                        "http://localhost:4200",
+                        "http://localhost:4201",
                         "http://localhost:8080",
                         "http://52.158.32.127:4200"
                     )
@@ -69,7 +67,6 @@ namespace Eventary_API
             app.MapGet("/", () => "Welcome to Eventary API");
 
             app.Run();
-
         }
     }
 }

@@ -24,34 +24,37 @@ namespace CORE.Services
 
         public async Task AddOrderAsync(OrderDto orderDto)
         {
-            if (orderDto.StartDate >= orderDto.EndDate)
-            {
-                throw new ArgumentException("StartDate must be earlier than EndDate.");
-            }
-
+            ValidateOrderDates(orderDto);
             await _orderRepository.AddOrderAsync(orderDto);
         }
 
         public async Task DeleteOrderAsync(long id)
+        {
+            await EnsureOrderExists(id);
+            await _orderRepository.DeleteOrderAsync(id);
+        }
+
+        public async Task UpdateOrderAsync(OrderDto orderDto)
+        {
+            await EnsureOrderExists(orderDto.Id);
+            await _orderRepository.UpdateOrderAsync(orderDto);
+        }
+
+        private void ValidateOrderDates(OrderDto orderDto)
+        {
+            if (orderDto.StartDate >= orderDto.EndDate)
+            {
+                throw new ArgumentException("StartDate must be earlier than EndDate.");
+            }
+        }
+
+        private async Task EnsureOrderExists(long id)
         {
             var existingOrder = await _orderRepository.GetByIdAsync(id);
             if (existingOrder == null)
             {
                 throw new Exception("Order not found.");
             }
-
-            await _orderRepository.DeleteOrderAsync(id);
-        }
-
-        public async Task UpdateOrderAsync(OrderDto orderDto)
-        {
-            var existingOrder = await _orderRepository.GetByIdAsync(orderDto.Id);
-            if (existingOrder == null)
-            {
-                throw new Exception("Order not found.");
-            }
-
-            await _orderRepository.UpdateOrderAsync(orderDto);
         }
     }
 }

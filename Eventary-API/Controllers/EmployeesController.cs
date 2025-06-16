@@ -38,24 +38,5 @@ namespace Eventary_API.Controllers
             }
             return Ok(employee);
         }
-
-        //[HttpPost]
-        //public async Task AddEmployeeAsync(EmployeeDto employeeDto)
-        //{
-        //    await _employeeService.AddEmployeeAsync(employeeDto);
-        //}
-
-        //[HttpPut]
-        //public async Task UpdateEmployeeAsync(EmployeeDto employeeDto)
-        //{
-        //    await _employeeService.UpdateEmployeeAsync(employeeDto);
-        //}
-
-        //[HttpDelete]
-        //[Route("{id}")]
-        //public async Task DeleteEmployeeAsync(long id)
-        //{
-        //    await _employeeService.DeleteEmployeeAsync(id);
-        //}
     }
 }

@@ -2,7 +2,6 @@
 using CORE.Interfaces;
 using CORE.Models;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.IdentityModel.Tokens;
 
 namespace DAL.Repositories
 {
@@ -29,7 +28,6 @@ namespace DAL.Repositories
                 EndDate = order.EndDate,
                 Status = order.Status,
                 Note = order.Note,
-
                 company_Id = order.company_Id
             });
         }
@@ -53,7 +51,6 @@ namespace DAL.Repositories
                 EndDate = order.EndDate,
                 Status = order.Status,
                 Note = order.Note,
-
                 company_Id = order.company_Id
             };
         }
@@ -71,7 +68,6 @@ namespace DAL.Repositories
                 EndDate = orderDto.EndDate,
                 Status = orderDto.Status,
                 Note = orderDto.Note,
-
                 company_Id = orderDto.company_Id
             };
 
@@ -84,7 +80,7 @@ namespace DAL.Repositories
             var order = await _context.order.FindAsync(orderDto.Id);
             if (order == null)
             {
-                throw new Exception("Order not found");
+                throw new ArgumentException("Order not found");
             }
 
             order.Name = orderDto.Name;
@@ -104,12 +100,11 @@ namespace DAL.Repositories
             var order = await _context.order.FindAsync(id);
             if (order == null)
             {
-                throw new Exception("Order not found");
+                throw new ArgumentException("Order not found");
             }
 
             _context.order.Remove(order);
             await _context.SaveChangesAsync();
         }
-
     }
 }
