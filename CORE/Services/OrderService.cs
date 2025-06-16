@@ -40,7 +40,7 @@ namespace CORE.Services
             await _orderRepository.UpdateOrderAsync(orderDto);
         }
 
-        private void ValidateOrderDates(OrderDto orderDto)
+        private static void ValidateOrderDates(OrderDto orderDto)
         {
             if (orderDto.StartDate >= orderDto.EndDate)
             {
@@ -53,7 +53,7 @@ namespace CORE.Services
             var existingOrder = await _orderRepository.GetByIdAsync(id);
             if (existingOrder == null)
             {
-                throw new Exception("Order not found.");
+                throw new ArgumentException("Order not found.");
             }
         }
     }

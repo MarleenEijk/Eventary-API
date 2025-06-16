@@ -4,7 +4,7 @@ namespace CORE.Dto
 {
     public class CompanyDto
     {
-        [Required]public long Id { get; set; }
-        [Required]public string Name { get; set; }
+        [Required] public required long Id { get; set; }
+        [Required] public required string Name { get; set; }
     }
 }
