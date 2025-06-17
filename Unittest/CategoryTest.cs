@@ -28,7 +28,7 @@ namespace Unittest
         [Fact]
         public async Task GetCategoryByIdAsync_ShouldReturnCategory()
         {
-            var categoryDto = new CategoryDto { Id = 1, Name = "Test Category", Company_Id = 1 }; // Added Company_Id
+            var categoryDto = new CategoryDto { Id = 1, Name = "Test Category", Company_Id = 1 };
             _repository.AddCategory(categoryDto);
 
             var result = await _repository.GetByIdAsync(1);
@@ -40,7 +40,7 @@ namespace Unittest
         [Fact]
         public async Task RemoveCategory_ShouldRemoveCategory()
         {
-            var categoryDto = new CategoryDto { Id = 1, Name = "Test Category", Company_Id = 1 }; // Added Company_Id
+            var categoryDto = new CategoryDto { Id = 1, Name = "Test Category", Company_Id = 1 };
             _repository.AddCategory(categoryDto);
 
             _repository.RemoveCategory(1);
