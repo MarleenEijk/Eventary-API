@@ -47,6 +47,7 @@ namespace IntergrationTests
                 // Haal de database uit de lijst van services
                 var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
                 // Maakt de database aan als deze nog niet bestaat
+                db.Database.EnsureDeleted();
                 db.Database.EnsureCreated();
 
                 // Testdata toevoegen voor categorie en bedrijf
