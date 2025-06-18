@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ProjectInfo xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://www.sonarsource.com/msbuild/integration/2015/1">
+  <ProjectName>Unittest</ProjectName>
+  <ProjectLanguage>C#</ProjectLanguage>
+  <ProjectType>Test</ProjectType>
+  <ProjectGuid>256261c8-e23e-43fc-a4b2-d257e42dc5ec</ProjectGuid>
+  <FullPath>D:\Fontys\2025-2026\Semester 3.1\Individueel project\Eventary\Eventary-API\Unittest\Unittest.csproj</FullPath>
+  <IsExcluded>false</IsExcluded>
+  <AnalysisResults>
+    <AnalysisResult Id="FilesToAnalyze" Location="D:\Fontys\2025-2026\Semester 3.1\Individueel project\Eventary\Eventary-API\.sonarqube\conf\7\FilesToAnalyze.txt" />
+  </AnalysisResults>
+  <AnalysisSettings>
+    <Property Name="sonar.cs.roslyn.reportFilePaths">D:\Fontys\2025-2026\Semester 3.1\Individueel project\Eventary\Eventary-API\.sonarqube\out\7\Issues.json</Property>
+    <Property Name="sonar.cs.analyzer.projectOutPaths">D:\Fontys\2025-2026\Semester 3.1\Individueel project\Eventary\Eventary-API\.sonarqube\out\7</Property>
+    <Property Name="sonar.cs.scanner.telemetry">D:\Fontys\2025-2026\Semester 3.1\Individueel project\Eventary\Eventary-API\.sonarqube\out\7\Telemetry.json</Property>
+  </AnalysisSettings>
+  <Configuration>Debug</Configuration>
+  <Platform>AnyCPU</Platform>
+  <TargetFramework>net8.0</TargetFramework>
+</ProjectInfo>
