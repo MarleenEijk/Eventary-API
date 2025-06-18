@@ -33,9 +33,8 @@ jobs:
           /k:"eventary-api" `
           /d:sonar.host.url="http://localhost:9000" `
           /d:sonar.login="${{ secrets.SONAR_TOKEN }}" `
-          /d:sonar.cs.coverage.reportPaths="Unittest/TestResults/CoverageReport/SonarQube.xml" `
-          /d:sonar.sources="CORE,DAL" `
-          /d:sonar.inclusions="**/*.cs"
+          /d:sonar.cs.opencover.reportsPaths="Unittest/TestResults/coverage.opencover.xml" `
+          /d:sonar.scanner.scanAll=false
       shell: powershell
 
     - name: Restore dependencies
@@ -46,32 +45,21 @@ jobs:
       run: dotnet build ./Eventary-API.sln --no-restore --configuration Debug
       shell: powershell
 
-    - name: Run Unit Tests with Coverage
+    - name: Run Unit Tests with OpenCover Coverage
       run: dotnet test ./Unittest/Unittest.csproj `
             /p:CollectCoverage=true `
-            /p:CoverletOutputFormat=cobertura `
+            /p:CoverletOutputFormat=opencover `
             /p:CoverletOutput=TestResults/ `
             --results-directory ./Unittest/TestResults `
             --no-build --configuration Debug
       shell: powershell
 
-    - name: Install ReportGenerator
-      run: dotnet tool install --global dotnet-reportgenerator-globaltool
-      shell: powershell
-
-    - name: Convert coverage report for SonarQube
-      run: reportgenerator `
-             -reports:"Unittest/TestResults/coverage.cobertura.xml" `
-             -targetdir:"Unittest/TestResults/CoverageReport" `
-             -reporttypes:"SonarQube"
-      shell: powershell
-
-    - name: Check if normalized coverage file exists
+    - name: Check if OpenCover coverage file exists
       run: |
-        if (Test-Path "Unittest/TestResults/CoverageReport/SonarQube.xml") {
-          Write-Host "Normalized coverage file found"
+        if (Test-Path "Unittest/TestResults/coverage.opencover.xml") {
+          Write-Host "Coverage file found"
         } else {
-          Write-Host "Normalized coverage file NOT found"
+          Write-Error "Coverage file NOT found"
         }
       shell: powershell
 
