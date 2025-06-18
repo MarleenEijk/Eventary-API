@@ -1,4 +1,4 @@
-name: .NET CI/CD 
+name: .NET CI/CD
 
 on:
   push:
@@ -32,7 +32,10 @@ jobs:
         dotnet sonarscanner begin `
           /k:"eventary-api" `
           /d:sonar.host.url="http://localhost:9000" `
-          /d:sonar.login="${{ secrets.SONAR_TOKEN }}"
+          /d:sonar.login="${{ secrets.SONAR_TOKEN }}" `
+          /d:sonar.cs.coverage.reportPaths="Unittest/TestResults/coverage.cobertura.xml" `
+          /d:sonar.sources="CORE,DAL" `
+          /d:sonar.inclusions="**/*.cs"
       shell: powershell
 
     - name: Restore dependencies
@@ -43,8 +46,22 @@ jobs:
       run: dotnet build ./Eventary-API.sln --no-restore --configuration Debug
       shell: powershell
 
-    - name: Run Unit Tests
-      run: dotnet test ./Unittest/Unittest.csproj --no-build --configuration Debug --verbosity normal
+    - name: Run Unit Tests with Coverage
+      run: dotnet test ./Unittest/Unittest.csproj `
+            /p:CollectCoverage=true `
+            /p:CoverletOutputFormat=cobertura `
+            /p:CoverletOutput=TestResults/ `
+            --results-directory ./Unittest/TestResults `
+            --no-build --configuration Debug
+      shell: powershell
+
+    - name: Check if coverage file exists
+      run: |
+        if (Test-Path "Unittest/TestResults/coverage.cobertura.xml") {
+          Write-Host "Coverage file found"
+        } else {
+          Write-Host "Coverage file NOT found"
+        }
       shell: powershell
 
     - name: End SonarQube analysis
