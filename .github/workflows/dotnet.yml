@@ -33,7 +33,7 @@ jobs:
           /k:"eventary-api" `
           /d:sonar.host.url="http://localhost:9000" `
           /d:sonar.login="${{ secrets.SONAR_TOKEN }}" `
-          /d:sonar.cs.opencover.reportsPaths="Unittest/TestResults/coverage.cobertura.xml"
+          /d:sonar.cs.coverage.reportPaths="Unittest/TestResults/coverage.cobertura.xml"
       shell: powershell
 
     - name: Restore dependencies
