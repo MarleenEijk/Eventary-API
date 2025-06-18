@@ -1,7 +1,5 @@
 ﻿using System.Net;
-using System.Net.Http;
 using System.Net.Http.Json;
-using System.Threading.Tasks;
 using CORE.Dto;
 using FluentAssertions;
 using Xunit;
@@ -10,10 +8,13 @@ namespace IntergrationTests.Controllers
 {
     public class ItemControllerTests
     {
+        // Httpclient voor HTTP verzoeken na te bootsen
         private readonly HttpClient _client;
 
         public ItemControllerTests()
         {
+            // Maak een nieuwe instantie van de EventaryWebApplicationFactory
+            // Maak een client aan die de API kan aanroepen
             var factory = new EventaryWebApplicationFactory();
             _client = factory.CreateClient();
         }
@@ -21,6 +22,7 @@ namespace IntergrationTests.Controllers
         [Fact]
         public async Task AddItem_ReturnsCreatedAndCanBeCalled()
         {
+            // Maak een nieuwe ItemDto aan met testgegevens
             var newItem = new ItemDto
             {
                 Id = 0,
@@ -32,17 +34,25 @@ namespace IntergrationTests.Controllers
                 Company_Id = 1
             };
 
+            // Verstuur een POST verzoek naar de API om het item toe te voegen
             var postResponse = await _client.PostAsJsonAsync("/api/items", newItem);
 
+            // Controleer of de statuscode van het antwoord Created is
             postResponse.StatusCode.Should().Be(HttpStatusCode.Created);
+            // Lees de inhoud van het antwoord en zet deze om naar ItemDto
             var createdItem = await postResponse.Content.ReadFromJsonAsync<ItemDto>();
+            // Controleer of het aangemaakte item niet null is en een id groter dan 0 heeft
             createdItem.Should().NotBeNull();
             createdItem!.Id.Should().BeGreaterThan(0);
 
+            // Verstuur een GET verzoek met de created item en de id
             var getResponse = await _client.GetAsync($"/api/items/{createdItem.Id}");
+            // Controleer of de statuscode van het antwoord OK is
             getResponse.StatusCode.Should().Be(HttpStatusCode.OK);
+            // Lees de inhoud van het antwoord en zet deze om naar ItemDto
             var fetchedItem = await getResponse.Content.ReadFromJsonAsync<ItemDto>();
 
+            // Controleer of het opgehaalde item niet null is en de juiste gegevens bevat
             fetchedItem.Should().NotBeNull();
             fetchedItem!.Name.Should().Be("Test Item");
             fetchedItem.Price.Should().Be(4);
@@ -62,13 +72,26 @@ namespace IntergrationTests.Controllers
                 Company_Id = 1
             };
 
+            var newItem2 = new ItemDto
+            {
+                Id = 0,
+                Name = "Item voor lijst2",
+                Price = 5,
+                Quantity = 15,
+                ImageUrl = "https://image/image.png",
+                Category_Id = 1,
+                Company_Id = 1
+            };
+
             await _client.PostAsJsonAsync("/api/items", newItem);
+            await _client.PostAsJsonAsync("/api/items", newItem2);
 
             var response = await _client.GetAsync("/api/items");
 
             response.StatusCode.Should().Be(HttpStatusCode.OK);
             var items = await response.Content.ReadFromJsonAsync<List<ItemDto>>();
             items.Should().NotBeNullOrEmpty();
+            items!.Count.Should().BeGreaterThanOrEqualTo(2);
         }
 
         [Fact]
@@ -168,7 +191,7 @@ namespace IntergrationTests.Controllers
                 Company_Id = 1
             };
 
-            var response = await _client.PutAsJsonAsync("/api/items/99999", nonExistingItem);
+            var response = await _client.PutAsJsonAsync("/api/items/45248532", nonExistingItem);
 
             response.StatusCode.Should().Be(HttpStatusCode.NotFound);
         }
