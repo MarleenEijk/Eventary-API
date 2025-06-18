@@ -14,10 +14,9 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{731E584F-59B7-47FC-A21A-37C26CB8074D}"
 	ProjectSection(SolutionItems) = preProject
 		docker-compose.yml = docker-compose.yml
-		sonar-project.properties = sonar-project.properties
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IntergrationTests", "IntergrationTests\IntergrationTests.csproj", "{4AF5B78D-81C8-4224-9AC8-E6D552BA02EE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IntergrationTests", "IntergrationTests\IntergrationTests.csproj", "{4AF5B78D-81C8-4224-9AC8-E6D552BA02EE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
