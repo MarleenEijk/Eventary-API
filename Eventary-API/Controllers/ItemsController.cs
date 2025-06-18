@@ -97,8 +97,5 @@ namespace Eventary_API.Controllers
             await _itemService.DeleteItemAsync(id);
             return Ok();
         }
-
-        //commandline for docker test
-
     }
 }
