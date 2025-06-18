@@ -27,15 +27,6 @@ jobs:
       run: echo "$env:USERPROFILE\.dotnet\tools" >> $env:GITHUB_PATH
       shell: powershell
 
-    - name: Check if coverage file exists
-      run: |
-        if (Test-Path "Unittest/TestResults/coverage.cobertura.xml") {
-          Write-Host "Coverage file found"
-        } else {
-          Write-Host "Coverage file NOT found"
-        }
-      shell: powershell
-
     - name: Begin SonarQube analysis
       run: |
         dotnet sonarscanner begin `
@@ -58,7 +49,17 @@ jobs:
             /p:CollectCoverage=true `
             /p:CoverletOutputFormat=cobertura `
             /p:CoverletOutput=TestResults/ `
+            --results-directory ./Unittest/TestResults `
             --no-build --configuration Debug
+      shell: powershell
+
+    - name: Check if coverage file exists
+      run: |
+        if (Test-Path "Unittest/TestResults/coverage.cobertura.xml") {
+          Write-Host "Coverage file found"
+        } else {
+          Write-Host "Coverage file NOT found"
+        }
       shell: powershell
 
     - name: End SonarQube analysis
