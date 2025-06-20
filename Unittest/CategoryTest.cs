@@ -1,6 +1,8 @@
 ﻿using CORE.Dto;
 using Unittest.FakeRepositories;
 using Xunit;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace Unittest
 {
@@ -18,7 +20,7 @@ namespace Unittest
         {
             var categoryDto = new CategoryDto { Id = 1, Name = "Test Category", Company_Id = 1 };
 
-            _repository.AddCategory(categoryDto);
+            await _repository.AddCategoryAsync(categoryDto);
             var categories = await _repository.GetAllAsync();
 
             Assert.Single(categories);
@@ -29,21 +31,21 @@ namespace Unittest
         public async Task GetCategoryByIdAsync_ShouldReturnCategory()
         {
             var categoryDto = new CategoryDto { Id = 1, Name = "Test Category", Company_Id = 1 };
-            _repository.AddCategory(categoryDto);
+            await _repository.AddCategoryAsync(categoryDto);
 
             var result = await _repository.GetByIdAsync(1);
 
             Assert.NotNull(result);
-            Assert.Equal("Test Category", result.Name);
+            Assert.Equal("Test Category", result!.Name);
         }
 
         [Fact]
         public async Task RemoveCategory_ShouldRemoveCategory()
         {
             var categoryDto = new CategoryDto { Id = 1, Name = "Test Category", Company_Id = 1 };
-            _repository.AddCategory(categoryDto);
+            await _repository.AddCategoryAsync(categoryDto);
 
-            _repository.RemoveCategory(1);
+            await _repository.RemoveCategoryAsync(1);
             var result = await _repository.GetByIdAsync(1);
 
             Assert.Null(result);
@@ -59,7 +61,7 @@ namespace Unittest
         [Fact]
         public async Task RemoveCategory_ShouldNotThrow_WhenCategoryDoesNotExist()
         {
-            _repository.RemoveCategory(999);
+            await _repository.RemoveCategoryAsync(999);
             var result = await _repository.GetByIdAsync(999);
             Assert.Null(result);
         }

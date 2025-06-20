@@ -21,18 +21,20 @@ namespace Unittest.FakeRepositories
             return await Task.FromResult(category);
         }
 
-        public void AddCategory(CategoryDto categoryDto)
+        public async Task AddCategoryAsync(CategoryDto categoryDto)
         {
             _categories.Add(categoryDto);
+            await Task.CompletedTask;
         }
 
-        public void RemoveCategory(long id)
+        public async Task RemoveCategoryAsync(long id)
         {
             var category = _categories.FirstOrDefault(c => c.Id == id);
             if (category != null)
             {
                 _categories.Remove(category);
             }
+            await Task.CompletedTask;
         }
     }
 }
