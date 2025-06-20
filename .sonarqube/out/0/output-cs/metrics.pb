@@ -5,7 +5,8 @@ aD:\Fontys\2025-2026\Semester 3.1\Individueel project\Eventary\Eventary-API\CORE
 |
 bD:\Fontys\2025-2026\Semester 3.1\Individueel project\Eventary\Eventary-API\CORE\Dto\EmployeeDto.cs 8r	
 z
-^D:\Fontys\2025-2026\Semester 3.1\Individueel project\Eventary\Eventary-API\CORE\Dto\ItemDto.cs 8r	z
+^D:\Fontys\2025-2026\Semester 3.1\Individueel project\Eventary\Eventary-API\CORE\Dto\ItemDto.cs 8r	
+z
 _D:\Fontys\2025-2026\Semester 3.1\Individueel project\Eventary\Eventary-API\CORE\Dto\OrderDto.cs 8r	
 ‚
 qD:\Fontys\2025-2026\Semester 3.1\Individueel project\Eventary\Eventary-API\CORE\Interfaces\ICategoryRepository.csr	
