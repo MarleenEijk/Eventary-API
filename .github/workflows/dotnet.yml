@@ -32,8 +32,10 @@ jobs:
         dotnet sonarscanner begin `
         /k:"eventary-api" `
         /d:sonar.host.url="http://localhost:9000" `
-        /d:sonar.login="sqp_01891960e5bf93371ecee299844860706d7e9dd2" `
-        /d:sonar.cs.opencover.reportsPaths="TestResults/coverage.opencover.xml" `
+        /d:sonar.login="${{ secrets.SONAR_TOKEN }}" `
+        /d:sonar.cs.opencover.reportsPaths="Unittest/TestResults/coverage.opencover.xml" `
+        /d:sonar.sources="CORE" `
+        /d:sonar.projectDate="${{ github.event.head_commit.timestamp }}" `
         /d:sonar.scanner.scanAll=false
       shell: powershell
 
