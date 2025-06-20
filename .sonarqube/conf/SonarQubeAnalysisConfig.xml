@@ -123,8 +123,8 @@
   </ServerSettings>
   <LocalSettings>
     <Property Name="sonar.host.url">http://localhost:9000</Property>
-    <Property Name="sonar.cs.opencover.reportsPaths">TestResults/coverage.opencover.xml</Property>
-    <Property Name="sonar.exclusions">TestResults/coverage.opencover.xml</Property>
+    <Property Name="sonar.cs.opencover.reportsPaths">Unittest/TestResults/coverage.opencover.xml</Property>
+    <Property Name="sonar.exclusions">Unittest/TestResults/coverage.opencover.xml</Property>
   </LocalSettings>
   <ScannerOptsSettings />
   <AnalyzersSettings>
