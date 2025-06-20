@@ -30,13 +30,13 @@ jobs:
     - name: Begin SonarQube analysis
       run: |
         dotnet sonarscanner begin `
-        /k:"eventary-api" `
-        /d:sonar.host.url="http://localhost:9000" `
-        /d:sonar.login="${{ secrets.SONAR_TOKEN }}" `
-        /d:sonar.cs.opencover.reportsPaths="Unittest/TestResults/coverage.opencover.xml" `
-        /d:sonar.sources="CORE" `
-        /d:sonar.projectDate="${{ github.run_started_at }}" 
-        /d:sonar.scanner.scanAll=false
+          /k:"eventary-api" `
+          /d:sonar.host.url="http://localhost:9000" `
+          /d:sonar.login="${{ secrets.SONAR_TOKEN }}" `
+          /d:sonar.cs.opencover.reportsPaths="Unittest/TestResults/coverage.opencover.xml" `
+          /d:sonar.sources="CORE" `
+          /d:sonar.projectDate="2025-06-20" `
+          /d:sonar.scanner.scanAll=false
       shell: powershell
 
     - name: Restore dependencies
