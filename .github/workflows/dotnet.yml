@@ -33,7 +33,7 @@ jobs:
           /k:"eventary-api" `
           /d:sonar.host.url="http://localhost:9000" `
           /d:sonar.login="${{ secrets.SONAR_TOKEN }}" `
-          /d:sonar.cs.opencover.reportsPaths="Unittest/TestResults/coverage.opencover.xml" `
+          /d:sonar.cs.opencover.reportsPaths="Unittest/TestResults/coverage.unit.opencover.xml"
           /d:sonar.scanner.scanAll=false
       shell: powershell
 
