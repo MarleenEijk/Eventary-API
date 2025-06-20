@@ -35,16 +35,18 @@ namespace CORE.Services
             ValidateCompanyName(companyDto.Name);
             await EnsureCompanyExists(companyDto.Id);
 
-            return true;
+            return await _companyRepository.UpdateCompanyAsync(companyDto);
         }
 
         public async Task<bool> DeleteCompanyAsync(long id)
         {
             await EnsureCompanyExists(id);
-            return true;
+
+            return await _companyRepository.DeleteCompanyAsync(id);
         }
 
-        private static void ValidateCompanyName(string name) // Marked as static
+
+        private static void ValidateCompanyName(string name)
         {
             if (string.IsNullOrWhiteSpace(name))
             {

@@ -124,6 +124,7 @@
   <LocalSettings>
     <Property Name="sonar.host.url">http://localhost:9000</Property>
     <Property Name="sonar.cs.opencover.reportsPaths">Unittest/TestResults/coverage.opencover.xml</Property>
+    <Property Name="sonar.projectDate">2025-06-20</Property>
     <Property Name="sonar.exclusions">Unittest/TestResults/coverage.opencover.xml</Property>
   </LocalSettings>
   <ScannerOptsSettings />
