@@ -35,7 +35,7 @@ jobs:
         /d:sonar.login="${{ secrets.SONAR_TOKEN }}" `
         /d:sonar.cs.opencover.reportsPaths="Unittest/TestResults/coverage.opencover.xml" `
         /d:sonar.sources="CORE" `
-        /d:sonar.projectDate="${{ github.event.head_commit.timestamp }}" `
+        /d:sonar.projectDate="${{ github.run_started_at }}" 
         /d:sonar.scanner.scanAll=false
       shell: powershell
 
